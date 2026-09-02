@@ -13,7 +13,7 @@ SimpleMixing(VIn::N, VOut::N, F::T ; F_args::Tuple = (), F_kwargs::Dict = Dict()
 Returns a dictionary containing the following
 - "VInNext" : Simple mixing of VIn and VOut with weight (1-`alpha`) and `alpha` respectively. 
 - "VOutNext" : The function `F` evaluated at VInNExt, with fixed args `F_args` and kwargs `F_kwargs`.
-- "Delta" : The norm difference b/w the next input and output.
+- "Delta" : The maximum absolute per-component difference b/w the next input and output, so convergence requires every component (not just the aggregate) to be within `tol`.
 - "kwargs" : the kwargs of this function itself, to be used by a subsequent function call in the next fixed point iteration. Since this is simple mixing, `alpha` is held constant.
 
 """
@@ -22,9 +22,9 @@ Returns a dictionary containing the following
         VInNext     =    alpha * VOut + (1 - alpha) * VIn
         VOutNext    =    F(VInNext, F_args... ; F_kwargs...)
 
-        return Dict("VInNext"   => VInNext, 
+        return Dict("VInNext"   => VInNext,
                     "VOutNext"  => VOutNext,
-                    "Delta"     => norm(VOutNext - VInNext) / sqrt(length(VInNext)), 
+                    "Delta"     => maximum(abs.(VOutNext - VInNext)),
                     "kwargs"    => Dict(:alpha => alpha))
     end
 
@@ -37,7 +37,7 @@ ScheduledMixing(VIn::N, VOut::N, F::T ; F_args::Tuple = (), F_kwargs::Dict = Dic
 Returns a dictionary containing the following
 - "VInNext" : Simple mixing of VIn and VOut with weight (1-beta) and beta respectively, where beta = `Scheduler(alpha)`, which may change with iteration. 
 - "VOutNext" : The function `F` evaluated at VInNExt, with fixed args `F_args` and kwargs `F_kwargs`.
-- "Delta" : The norm difference b/w the next input and output.
+- "Delta" : The maximum absolute per-component difference b/w the next input and output, so convergence requires every component (not just the aggregate) to be within `tol`.
 - "kwargs" : the kwargs of this function itself, to be used by a subsequent function call in the next fixed point iteration. Here, the alpha value is updated every iteration using a Scheduler.
 
 """
@@ -48,9 +48,9 @@ Returns a dictionary containing the following
         VInNext     =    ScheduledAlpha * VOut + (1 - ScheduledAlpha) * VIn
         VOutNext    =    F(VInNext, F_args... ; F_kwargs...)
 
-        return Dict("VInNext"   => VInNext, 
+        return Dict("VInNext"   => VInNext,
                     "VOutNext"  => VOutNext,
-                    "Delta"     => norm(VOutNext - VInNext) / sqrt(length(VInNext)), 
+                    "Delta"     => maximum(abs.(VOutNext - VInNext)),
                     "kwargs"    => Dict(:alpha => ScheduledAlpha, :Scheduler => Scheduler))
     end
 
@@ -63,7 +63,7 @@ BroydenMixing(VIn::N, VOut::N, F::T ; F_args::Tuple = (), F_kwargs::Dict = Dict(
 Returns a dictionary containing the following
 - "VInNext" : simple mixing of VIn and VOut with weight (1-beta) and beta respectively, where beta = `Scheduler(alpha)`, which may change with iteration. 
 - "VOutNext" : The function `F` evaluated at VInNExt, with fixed args `F_args` and kwargs `F_kwargs`.
-- "Delta" : The norm difference b/w the next input and output.
+- "Delta" : The maximum absolute per-component difference b/w the next input and output, so convergence requires every component (not just the aggregate) to be within `tol`.
 - "kwargs" : the kwargs of this function itself, to be used by a subsequent function call in the next fixed point iteration. Here, the B-matrix is updated every iteration according to Broyden mixing rules.
 
 """
@@ -82,9 +82,9 @@ Returns a dictionary containing the following
         denom       =   transpose(dVIn) * B * dF
         BNext       =   B + ((((dVIn - B * dF) * transpose(dVIn)) * B) / (denom))
 
-        return Dict("VInNext"   => VInNext, 
+        return Dict("VInNext"   => VInNext,
                     "VOutNext"  => VOutNext,
-                    "Delta"     => norm(VOutNext - VInNext) / sqrt(length(VInNext)), 
+                    "Delta"     => maximum(abs.(VOutNext - VInNext)),
                     "kwargs"    => Dict(:alpha => alpha, :B => BNext))
 
     end
