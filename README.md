@@ -1,6 +1,6 @@
 # FixedPointToolkit.jl
 
-[![Build Status](https://github.com/Anjishnubose/FixedPointToolkit.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/Anjishnubose/FixedPointToolkit.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/Toronto-Condensed-Matter-Theory/FixedPointToolkit.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/Toronto-Condensed-Matter-Theory/FixedPointToolkit.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 FixedPointToolkit.jl is a Julia package meant for calculating fixed points of any scalar or vector functions, or equivalently, solve some system of self-consistent equations.
 
@@ -13,4 +13,4 @@ Currently supported :
 * Can plot results of inputs, outputs, and convergence as a function of iterations.
 
 ## Documentation
-For further details, please refer to [Documentation](https://anjishnubose.github.io/FixedPointToolkit.jl/)
+For further details, please refer to [Documentation](https://Toronto-Condensed-Matter-Theory.github.io/FixedPointToolkit.jl/dev/)

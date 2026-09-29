@@ -18,6 +18,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/Anjishnubose/FixedPointToolkit.jl.git",
+    repo = "github.com/Toronto-Condensed-Matter-Theory/FixedPointToolkit.jl.git",
     devbranch = "main"
 )
