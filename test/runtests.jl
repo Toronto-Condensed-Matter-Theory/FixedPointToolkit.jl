@@ -1,7 +1,13 @@
 using FixedPointToolkit
-using Test
+using Test, LinearAlgebra, Random, Logging
+
+include("problems.jl")
 
 @testset "FixedPointToolkit.jl" begin
-    include("ScalarFunction.jl")
-    include("VectorFunction.jl")
+    @testset "Scalar function"      include("ScalarFunction.jl")
+    @testset "Vector function"      include("VectorFunction.jl")
+    @testset "Canonical problems"   include("CanonicalProblems.jl")
+    @testset "Update edge cases"    include("EdgeCases.jl")
+    @testset "Checkpointing"        include("Checkpointing.jl")
+    @testset "Plots extension"      include("PlotsExtension.jl")
 end

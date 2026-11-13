@@ -26,34 +26,4 @@ Returns an alpha value descreased exponentially with the iteration `iter` with s
         return alpha * exp(- (rate / max_iter))
     end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
