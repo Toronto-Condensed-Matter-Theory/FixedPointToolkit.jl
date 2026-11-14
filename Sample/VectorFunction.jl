@@ -1,5 +1,4 @@
-include("../src/FixedPointToolkit.jl")
-using .FixedPointToolkit
+using FixedPointToolkit
 
 using LinearAlgebra
 """
